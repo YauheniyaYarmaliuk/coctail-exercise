@@ -1,1 +1,3 @@
-# coctail-exercise
+# cocktail-exercise
+
+mvn clean install
