@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
 public class ResponseParsingSteps {
@@ -48,7 +49,7 @@ public class ResponseParsingSteps {
   public List<String> getCocktailNamesByFirstLetter(String letter) {
     String warning = "Nothing was found by letter: ";
     Response response = api.getSearchByFirstLetter(letter);
-    assertThat(warning + letter, response.jsonPath(), nullValue());
+    assertThat(warning + letter, response.jsonPath(), notNullValue());
     return response.jsonPath().getList("drinks.strDrink");
   }
 
