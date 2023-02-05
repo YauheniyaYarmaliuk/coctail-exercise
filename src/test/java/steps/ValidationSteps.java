@@ -8,8 +8,8 @@ import org.hamcrest.Matcher;
 import java.util.List;
 import java.util.Map;
 
-import static org.exercise.ta.helper.CommonHelper.getMsgExp;
-import static org.exercise.ta.helper.CommonHelper.getMsgForIng;
+import static org.exercise.ta.helper.MessageHelper.getMsgFieldValue;
+import static org.exercise.ta.helper.MessageHelper.getMsgIngField;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
@@ -22,15 +22,15 @@ public class ValidationSteps {
   public void validateIngredientFields(Ingredients ingredients, boolean isAlcohol) {
     Matcher<Object> matcher = isAlcohol ? notNullValue() : nullValue();
     for (Ingredient ing : ingredients.getIngredients()) {
-      assertThat(getMsgForIng(ing, "idIngredient"), ing.getIdIngredient(), notNullValue());
-      assertThat(getMsgForIng(ing, "strIngredient"), ing.getStrIngredient(), notNullValue());
-      assertThat(getMsgForIng(ing, "strDescription"), ing.getStrDescription(), notNullValue());
-      assertThat(getMsgForIng(ing, "strType"), ing.getStrType(), notNullValue());
-      assertThat(getMsgForIng(ing, "strABV"), ing.getStrABV(), matcher);
+      assertThat(getMsgIngField(ing, "idIngredient"), ing.getIdIngredient(), notNullValue());
+      assertThat(getMsgIngField(ing, "strIngredient"), ing.getStrIngredient(), notNullValue());
+      assertThat(getMsgIngField(ing, "strDescription"), ing.getStrDescription(), notNullValue());
+      assertThat(getMsgIngField(ing, "strType"), ing.getStrType(), notNullValue());
+      assertThat(getMsgIngField(ing, "strABV"), ing.getStrABV(), matcher);
       if (isAlcohol) {
         assertEquals("Yes", ing.getStrAlcohol());
       } else {
-        assertThat(getMsgForIng(ing, "strAlcohol"), ing.getStrAlcohol(), nullValue());
+        assertThat(getMsgIngField(ing, "strAlcohol"), ing.getStrAlcohol(), nullValue());
       }
     }
   }
@@ -38,7 +38,7 @@ public class ValidationSteps {
   @Step("Assert required fields values are null or String")
   public void validateNotNullOrString(Map<String, String> map, String[] keys) {
     for (String key : keys) {
-      assertTrue(getMsgExp(key, map.get(key)), (map.get(key) == null || map.get(key) instanceof String));
+      assertTrue(getMsgFieldValue(key, map.get(key)), (map.get(key) == null || map.get(key) instanceof String));
     }
   }
 

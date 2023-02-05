@@ -10,14 +10,14 @@ import steps.ValidationSteps;
 import java.util.List;
 import java.util.Map;
 
-import static org.exercise.ta.helper.CommonHelper.getRndLetter;
-import static org.exercise.ta.helper.CommonHelper.getRndValueFromList;
+import static org.exercise.ta.helper.RndGenerator.getRndLetter;
+import static org.exercise.ta.helper.RndGenerator.getRndValueFromList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 import static org.testng.AssertJUnit.assertEquals;
 
 public class CocktailApiTest {
-  final ResponseParsingSteps respSteps = new ResponseParsingSteps();
+  final ResponseParsingSteps steps = new ResponseParsingSteps();
   final ValidationSteps validSteps = new ValidationSteps();
 
   @DataProvider(name = "values", parallel = true)
@@ -31,18 +31,18 @@ public class CocktailApiTest {
   @Issue("Field strAlcohol get 'No' exist null. Description should not be null")
   @Test(testName = "Check the fields using the search non/alcoholic ingredient", dataProvider = "values")
   public void checkFieldsBySearchNonAlcIng(String category, boolean isAlcohol) {
-    List<String> cocktails = respSteps.getCocktailNamesByCategory(category);
+    List<String> cocktails = steps.getCocktailNamesByCategory(category);
     String name = getRndValueFromList(cocktails);
-    List<String> ingNames = respSteps.getFirstsIngByName(name);
+    List<String> ingNames = steps.getFirstsIngByName(name);
     String ingredient = getRndValueFromList(ingNames);
-    Ingredients ingredients = respSteps.getFieldsByIng(ingredient);
+    Ingredients ingredients = steps.getFieldsByIng(ingredient);
     validSteps.validateIngredientFields(ingredients, isAlcohol);
   }
 
   @Test(testName = "Verification does not exist cocktail via search")
   public void checkNotExistCocktailBySearch() {
     String wrongName = "wrongCocktail";
-    Map<String, String> drinks = respSteps.getDrinksByName(wrongName);
+    Map<String, String> drinks = steps.getDrinksByName(wrongName);
     assertThat(drinks, nullValue());
   }
 
@@ -51,22 +51,22 @@ public class CocktailApiTest {
     String[] requiredFields = {"strDrink", "strTags", "strCategory",
         "strAlcoholic", "strGlass", "strIngredient1", "strMeasure1",
         "strCreativeCommonsConfirmed", "dateModified"};
-    String cocktailName = respSteps.getRndCocktailName();
-    Map<String, String> drinks = respSteps.getDrinksByName(cocktailName);
+    String cocktailName = steps.getRndCocktailName();
+    Map<String, String> drinks = steps.getDrinksByName(cocktailName);
     validSteps.validateNotNullOrString(drinks, requiredFields);
   }
 
   @Test(testName = "Check cocktail names by first letter")
   public void checkSearchResByFirstLetter() {
     String rndLetter = getRndLetter();
-    List<String> cocktails = respSteps.getCocktailNamesByFirstLetter(rndLetter);
+    List<String> cocktails = steps.getCocktailNamesByFirstLetter(rndLetter);
     validSteps.validateFirstLetterFromList(cocktails, rndLetter);
   }
 
   @Test(testName = "Check popular filter query unregistered")
   public void checkPopularFilterWithoutReg() {
     String expMsg = "Only For Patreon supporters sorry";
-    String actMsg = respSteps.getNameOfPopularCocktail();
+    String actMsg = steps.getNameOfPopularCocktail();
     assertEquals(actMsg, expMsg);
   }
 }

@@ -8,6 +8,9 @@ import org.exercise.ta.model.Ingredients;
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
+
 public class ResponseParsingSteps {
   final WebServiceApi api = new WebServiceApi();
 
@@ -43,7 +46,9 @@ public class ResponseParsingSteps {
 
   @Step("Get cocktails names by searching via first letter")
   public List<String> getCocktailNamesByFirstLetter(String letter) {
+    String warning = "Nothing was found by letter: ";
     Response response = api.getSearchByFirstLetter(letter);
+    assertThat(warning + letter, response.jsonPath(), nullValue());
     return response.jsonPath().getList("drinks.strDrink");
   }
 
