@@ -1,17 +1,11 @@
 package org.exercise.ta.model;
 
 public class Ingredient {
-
   String idIngredient;
-
   String strIngredient;
-
   String strDescription;
-
   String strType;
-
   String strAlcohol;
-
   String strABV;
 
   public String getIdIngredient() {

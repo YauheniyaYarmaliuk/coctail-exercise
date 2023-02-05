@@ -14,8 +14,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <rest.assured.version>5.3.0</rest.assured.version>
         <allure.version>2.20.1</allure.version>
-        <log4j.version>2.12.0</log4j.version>
+        <log4j.version>2.19.0</log4j.version>
         <aspectj.version>1.9.8</aspectj.version>
+        <slf4j.version>2.0.6</slf4j.version>
         <maven.surefire.version>3.0.0-M8</maven.surefire.version>
     </properties>
     <dependencies>
@@ -45,6 +46,11 @@
             <version>${log4j.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.7.1</version>
@@ -59,6 +65,22 @@
             <artifactId>allure-testng</artifactId>
             <version>${allure.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-java-commons</artifactId>
+            <version>2.20.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <build>
@@ -76,7 +98,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
+                <version>${maven.surefire.version}</version>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                     <argLine>
